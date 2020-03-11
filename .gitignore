@@ -104,6 +104,7 @@ dist
 .tern-port
 
 # Custom ignores
+public/uploads
 
 # to be removed
 PROJECT-TEMPLATE-ASSETS
