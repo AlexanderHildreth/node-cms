@@ -1,0 +1,23 @@
+{
+  "name": "cms",
+  "version": "0.0.1",
+  "description": "A CMS in Node.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderHildreth/node-cms.git"
+  },
+  "keywords": [
+    "CMS",
+    "NODE"
+  ],
+  "author": "Alexander Hildreth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexanderHildreth/node-cms/issues"
+  },
+  "homepage": "https://github.com/AlexanderHildreth/node-cms#readme"
+}
