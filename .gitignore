@@ -102,3 +102,8 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Custom ignores
+
+# to be removed
+PROJECT-TEMPLATE-ASSETS
