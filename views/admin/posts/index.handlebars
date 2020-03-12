@@ -1,0 +1,30 @@
+<h1>All posts</h1>
+<table class="table table-hover table responsive">
+    <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Body</th>
+            <th>Status</th>
+            <th class="text-center">Comments</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each posts}}
+            <tr>
+                <td>{{offsetIndex @index}}</td>
+                <td>{{title}}</td>
+                <td>{{{trimString body _id}}}</td>
+                <td>{{status}}</td>
+                <td class="text-center"><i class="text-center fa {{#if allowComments}}fa-check text-success{{else}}fa-times text-danger{{/if}}"></i></td>
+                <td style="display: flex; float: right;">
+                    <a href="/admin/posts/edit/{{_id}}" class="btn btn-info" style="float: inline-end;"><i class="fa fa-edit"></i> Edit</a>
+                    <form action="/admin/posts/delete/{{_id}}?_method=delete" id="deletePost{{offsetIndex @index}}" method="post" onsubmit="return confirm('The current post: `{{title}}` will be removed, are you sure?');">
+                        <button type="submit" class=" btn btn-danger" form="deletePost{{offsetIndex @index}}"><i class="fa fa-trash"></i> Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
