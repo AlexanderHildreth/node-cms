@@ -24,7 +24,7 @@ router.get('/edit/:id', (req, res) => {
     })
 })
 
-// Post
+// Create
 router.post('/create', (req, res) => {
     var allowComments
     req.body.allowComments ? allowComments = true : allowComments = false
@@ -44,5 +44,32 @@ router.post('/create', (req, res) => {
 })
 
 // Update
+router.put('/edit/:id', (req, res) => {
+    Post.findById({ _id: req.params.id }).then(post => {
+        var allowComments
+        req.body.allowComments ? allowComments = true : allowComments = false
+
+        post.title          = req.body.title
+        post.body           = req.body.body
+        post.status         = req.body.status
+        post.allowComments  = allowComments
+
+        post.save().then(updatedPost => {
+            res.status(200).redirect('/admin/posts')
+        }).catch(err => {
+            console.log(`Could not save post\n${err}`)
+        })
+
+    })
+})
+
+// Remove
+router.delete('/delete/:id', (req, res) => {
+    Post.deleteOne({_id: req.params.id}).then(() => {
+        res.redirect('/admin/posts')
+    }).catch(err => {
+        console.log(`Could not delete post\n${err}`)
+    })
+})
 
 module.exports = router
