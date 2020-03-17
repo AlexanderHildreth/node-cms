@@ -1,8 +1,12 @@
-const express   = require('express')
+const express       = require('express')
+const fs            = require('fs')
+const path          = require('path')
 // Models
-const Post      = require('../../models/Post')
+const Post          = require('../../models/Post')
 // const vars
-const router    = express.Router()
+const router        = express.Router()
+// Helpers
+const uploadHelper  = require('../../helpers/uploadHelper') 
 
 router.all('/*', (req, res, next) => {
     req.app.locals.layout = 'admin'
@@ -26,16 +30,28 @@ router.get('/edit/:id', (req, res) => {
 
 // Create
 router.post('/create', (req, res) => {
+    let fileName = '';
+
+    if (!uploadHelper.isEmpty(req.files)) {
+        let file = req.files.file
+        fileName = Date.now() + `-${file.name}`
+        
+        file.mv(`./public/uploads/${fileName}`, (err) => {
+            if(err) throw err
+        }) 
+    }
+    
     var allowComments
     req.body.allowComments ? allowComments = true : allowComments = false
 
     const newPost = new Post({
         title: req.body.title,
+        file: fileName,
         body: req.body.body,
         status: req.body.status,
         allowComments: allowComments
     })
-
+    
     newPost.save().then(() => {
         res.status(200).redirect('/admin/posts')
     }).catch(err => {
@@ -45,11 +61,23 @@ router.post('/create', (req, res) => {
 
 // Update
 router.put('/edit/:id', (req, res) => {
+    let fileName = '';
+    
+    if (!uploadHelper.isEmpty(req.files)) {
+        let file = req.files.file
+        fileName = Date.now() + `-${file.name}`
+
+        file.mv(`./public/uploads/${fileName}`, (err) => {
+            if (err) throw err
+        })
+    }
+
     Post.findById({ _id: req.params.id }).then(post => {
         var allowComments
         req.body.allowComments ? allowComments = true : allowComments = false
 
         post.title          = req.body.title
+        post.file           = fileName
         post.body           = req.body.body
         post.status         = req.body.status
         post.allowComments  = allowComments
@@ -59,17 +87,21 @@ router.put('/edit/:id', (req, res) => {
         }).catch(err => {
             console.log(`Could not save post\n${err}`)
         })
-
     })
 })
 
 // Remove
 router.delete('/delete/:id', (req, res) => {
-    Post.deleteOne({_id: req.params.id}).then(() => {
-        res.redirect('/admin/posts')
-    }).catch(err => {
-        console.log(`Could not delete post\n${err}`)
+    Post.findOne({_id: req.params.id}).then(post => {
+        fs.unlink(uploadHelper.uploadsDir + post.file, () => {
+            Post.deleteOne({_id: req.params.id}).then(() => {
+                res.redirect('/admin/posts')
+            }).catch(err => {
+                console.log(`Could not delete post\n${err}`)
+            })
+        })
     })
+
 })
 
 module.exports = router

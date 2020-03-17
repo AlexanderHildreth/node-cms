@@ -5,6 +5,8 @@ const PostSchema = new Schema({
     title: {
         type: String,
         require: true
+    }, file: {
+        type: String
     }, body: {
         type: String,
         requird: true
