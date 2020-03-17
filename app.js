@@ -5,6 +5,7 @@ const expHandlebars     = require('express-handlebars')
 const methodOverride    = require('method-override')
 const mongoose          = require('mongoose')
 const path              = require('path')
+const upload            = require('express-fileupload')
 // Models
 const postsModel        = require('./models/Post')
 // Routes
@@ -14,9 +15,7 @@ const postRoutes        = require('./routes/admin/posts')
 // const vars
 const app               = express();
 const port              = process.env.PORT || 9999
-const {select}          = require('./helpers/handlebarsHelpers')
-const {trimString}      = require('./helpers/handlebarsHelpers')
-const {offsetIndex}     = require('./helpers/handlebarsHelpers')
+const handlebarsHelpers = require('./helpers/handlebarsHelpers')
 
 // DB connection
 mongoose.Promise = global.Promise
@@ -32,16 +31,13 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use(methodOverride('_method'))
+app.use(upload())
 app.use('/', homeRoutes)
 app.use('/admin', adminRoutes)
 app.use('/admin/posts', postRoutes)
 
 // Setting
-app.engine('handlebars', expHandlebars({ defaultLayout: 'home', helpers: {
-    select: select, 
-    trimString: trimString,
-    offsetIndex: offsetIndex
-}}))
+app.engine('handlebars', expHandlebars({ defaultLayout: 'home', helpers: handlebarsHelpers}))
 app.set('view engine', 'handlebars')
 
 
