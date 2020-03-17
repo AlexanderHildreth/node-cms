@@ -20,7 +20,7 @@ router.get('/create', (req, res) => {
 })
 router.get('/edit/:id', (req, res) => {
     Post.findById({_id: req.params.id}).lean().then(post => {
-        res.render('admin/posts/edit', {post: post})
+        res.render('admin/posts/edit', { post: post  })
     })
 })
 
