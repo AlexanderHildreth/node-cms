@@ -38,7 +38,7 @@ router.post('/create', (req, res) => {
         errors.push({ message: 'Please enter a valid title' })
     }
 
-    if (!req.body.file) {
+    if (!req.files.file) {
         errors.push({ message: 'Please upload an image' })
     }
 
@@ -71,7 +71,7 @@ router.post('/create', (req, res) => {
     })
     
     newPost.save().then(savedPost => {
-        req.flash('successMessage', `Post successfully created: ${savedPost.title}`)
+        req.flash('successMessage', `Post successfully created: "${savedPost.title}"`)
         res.status(200).redirect('/admin/posts')
     }).catch(err => {
         res.render('admin/posts.create', { eroors: err.errors })
