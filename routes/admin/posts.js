@@ -52,7 +52,8 @@ router.post('/create', (req, res) => {
         allowComments: allowComments
     })
     
-    newPost.save().then(() => {
+    newPost.save().then(savedPost => {
+        req.flash('successMessage', `Post successfully created: ${savedPost.title}`)
         res.status(200).redirect('/admin/posts')
     }).catch(err => {
         console.log(`Could not save post\n${err}`)

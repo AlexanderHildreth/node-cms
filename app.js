@@ -39,7 +39,13 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
-app.use(flash)
+app.use(flash())
+app.use((req, res, next) => {
+    res.locals.successMessage = req.flash('successMessage')
+    res.locals.errorMessage = req.flash('errorMessage')
+
+    next()
+})
 app.use('/', homeRoutes)
 app.use('/admin', adminRoutes)
 app.use('/admin/posts', postRoutes)
