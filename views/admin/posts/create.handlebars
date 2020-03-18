@@ -1,21 +1,33 @@
 <h1>Create a post</h1>
-{{!-- enctype="multipart/form-data" --}}
+
+{{#each errors}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{message}}
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/each}}
+
 <form action="/admin/posts/create" method="post" class="col-md-6 col-sm-12" enctype="multipart/form-data">
     <div class="form-group row">
         <label for="title" class="col-sm-2">Title</label>
         <div class="col-sm-10">
-            <input name="title" type="text" required class="form-control" id="title" placeholder="Enter title">
+            <input name="title" type="text" class="form-control" id="title" placeholder="Enter title" value="{{post.title}}">
         </div>
     </div>
     <div class="form-group row">
         <label for="file" class="col-sm-2">Upload Image</label>
-        <input type="file" name="file" id="file" class="form-control-file col-sm-10">
+        <div class="col-sm-10">
+            <input type="file" name="file" id="file" class="form-control-file col-sm-10">
+        </div>
     </div>
     <div class="form-group row">
         <label for="body" class="col-sm-2">Body</label>
         <div class="col-sm-10">
-            <textarea required name="body" cols="30" rows="10" class="form-control" id="body"
-            placeholder="Enter body"></textarea>
+            <textarea name="body" cols="30" rows="10" class="form-control" id="body"
+            placeholder="Enter body">{{post.body}}</textarea>
         </div>
     </div>
     <div class="form-group row">

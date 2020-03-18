@@ -30,7 +30,26 @@ router.get('/edit/:id', (req, res) => {
 
 // Create
 router.post('/create', (req, res) => {
-    let fileName = '';
+    let errors      = []
+    let fileName    = '';
+    var allowComments
+
+    if(!req.body.title) {
+        errors.push({ message: 'Please enter a valid title' })
+    }
+
+    if (!req.body.file) {
+        errors.push({ message: 'Please upload an image' })
+    }
+
+    if (!req.body.body) {
+        errors.push({ message: 'Please enter a valid body' })
+    }
+
+    if(errors.length > 0) {
+        res.render('admin/posts/create', { errors: errors, post: req.body })
+        return;
+    }
 
     if (!uploadHelper.isEmpty(req.files)) {
         let file = req.files.file
@@ -40,10 +59,9 @@ router.post('/create', (req, res) => {
             if(err) throw err
         }) 
     }
-    
-    var allowComments
-    req.body.allowComments ? allowComments = true : allowComments = false
 
+    req.body.allowComments ? allowComments = true : allowComments = false
+    
     const newPost = new Post({
         title: req.body.title,
         file: fileName,
@@ -55,13 +73,33 @@ router.post('/create', (req, res) => {
     newPost.save().then(() => {
         res.status(200).redirect('/admin/posts')
     }).catch(err => {
-        console.log(`Could not save post\n${err}`)
+        res.render('admin/posts.create', { eroors: err.errors })
+        return;
     })
 })
-
+    
 // Update
 router.put('/edit/:id', (req, res) => {
-    let fileName = '';
+    let errors      = []
+    let fileName    = '';
+    var allowComments
+
+    if (!req.body.title) {
+        errors.push({ message: 'Please enter a valid title' })
+    }
+
+    if (!req.body.file) {
+        errors.push({ message: 'Please upload an image' })
+    }
+
+    if (!req.body.body) {
+        errors.push({ message: 'Please enter a valid body' })
+    }
+
+    if (errors.length > 0) {
+        res.render('admin/posts/create', { errors: errors, post: req.body })
+        return;
+    }
     
     if (!uploadHelper.isEmpty(req.files)) {
         let file = req.files.file
@@ -73,7 +111,6 @@ router.put('/edit/:id', (req, res) => {
     }
 
     Post.findById({ _id: req.params.id }).then(post => {
-        var allowComments
         req.body.allowComments ? allowComments = true : allowComments = false
 
         post.title          = req.body.title
