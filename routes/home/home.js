@@ -7,6 +7,9 @@ router.all('/*', (req, res, next) => {
 })
 
 router.get('/', (req, res) => {
+    req.session.foo = 'foobar'
+    req.session.foo ? console.log(`session found: ${req.session.foo}`) : console.log('No session found')
+
     res.render('home/index')
 })
 
