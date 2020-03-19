@@ -85,42 +85,46 @@ router.put('/edit/:id', (req, res) => {
     let fileName    = '';
     var allowComments
 
-    if (!req.body.title) {
-        errors.push({ message: 'Please enter a valid title' })
-    }
-
-    if (!req.body.file) {
-        errors.push({ message: 'Please upload an image' })
-    }
-
-    if (!req.body.body) {
-        errors.push({ message: 'Please enter a valid body' })
-    }
-
-    if (errors.length > 0) {
-        res.render('admin/posts/create', { errors: errors, post: req.body })
-        return;
-    }
     
-    if (!uploadHelper.isEmpty(req.files)) {
-        let file = req.files.file
-        fileName = Date.now() + `-${file.name}`
-
-        file.mv(`./public/uploads/${fileName}`, (err) => {
-            if (err) throw err
-        })
-    }
-
     Post.findById({ _id: req.params.id }).then(post => {
+        if (!req.body.title) {
+            errors.push({ message: 'Please enter a valid title' })
+        }
+    
+        if (!req.body.file && !post.file) {
+            errors.push({ message: 'Please upload an image' })
+        }
+    
+        if (!req.body.body) {
+            errors.push({ message: 'Please enter a valid body' })
+        }
+    
+        if (errors.length > 0) {
+            res.render('admin/posts/edit', { errors: errors, post: req.body })
+            return;
+        }
+
         req.body.allowComments ? allowComments = true : allowComments = false
 
         post.title          = req.body.title
-        post.file           = fileName
         post.body           = req.body.body
         post.status         = req.body.status
         post.allowComments  = allowComments
 
+        if (!uploadHelper.isEmpty(req.files)) {
+            let file = req.files.file
+            fileName = Date.now() + `-${file.name}`
+            post.file = fileName
+            // fs.unlink(uploadHelper.uploadsDir + post.file, () => {
+                file.mv(`./public/uploads/${fileName}`, (err) => {
+                    if (err) throw err
+                })
+            // })
+
+        }
+
         post.save().then(updatedPost => {
+            req.flash('successMessage', `Post successfully updated: "${updatedPost.title}"`)
             res.status(200).redirect('/admin/posts')
         }).catch(err => {
             console.log(`Could not save post\n${err}`)
@@ -132,7 +136,8 @@ router.put('/edit/:id', (req, res) => {
 router.delete('/delete/:id', (req, res) => {
     Post.findOne({_id: req.params.id}).then(post => {
         fs.unlink(uploadHelper.uploadsDir + post.file, () => {
-            Post.deleteOne({_id: req.params.id}).then(() => {
+            Post.deleteOne({ _id: req.params.id }).then(() => {
+                req.flash('warningMessage', `Post successfully deleted!`)
                 res.redirect('/admin/posts')
             }).catch(err => {
                 console.log(`Could not delete post\n${err}`)

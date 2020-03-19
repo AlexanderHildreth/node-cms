@@ -1,14 +1,6 @@
 <h1>Create a post</h1>
 
-{{#each errors}}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{message}}
-
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{{/each}}
+{{> admin/form-msgs}}
 
 <form action="/admin/posts/create" method="post" class="col-md-6 col-sm-12" enctype="multipart/form-data">
     <div class="form-group row">
