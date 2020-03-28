@@ -17,6 +17,9 @@ const PostSchema = new Schema({
     }, allowComments: {
         type: Boolean,
         require: true
+    }, date: {
+        type: Date,
+        default: Date.now()
     }
 })
 

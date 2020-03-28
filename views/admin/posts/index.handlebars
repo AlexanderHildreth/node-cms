@@ -9,6 +9,7 @@
             <th>Body</th>
             <th>Status</th>
             <th class="text-center">Comments</th>
+            <th>Date Modified</th>
             <th class="text-center">Actions</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
                 <td>{{{trimString body _id}}}</td>
                 <td>{{status}}</td>
                 <td class="text-center"><i class="fa {{#if allowComments}}fa-check text-success{{else}}fa-times text-danger{{/if}}"></i></td>
+                <td>{{genDate date 'Do MMMM YYYY'}}</td>
                 <td style="display: flex; float: right;">
                     <a href="/admin/posts/edit/{{_id}}" class="btn btn-info" style="float: inline-end;"><i class="fa fa-edit"></i> Edit</a>
                     <form action="/admin/posts/delete/{{_id}}?_method=delete" id="deletePost{{offsetIndex @index}}" method="post" onsubmit="return confirm('The current post: `{{title}}` will be removed, are you sure?');">
