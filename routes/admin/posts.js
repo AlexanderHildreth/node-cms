@@ -68,7 +68,9 @@ router.post('/create', (req, res) => {
         file: fileName,
         body: req.body.body,
         status: req.body.status,
-        allowComments: allowComments
+        allowComments: allowComments,
+        dateCreated: Date.now(),
+        dateModified: Date.now()
     })
     
     newPost.save().then(savedPost => {
@@ -111,6 +113,7 @@ router.put('/edit/:id', (req, res) => {
         post.body           = req.body.body
         post.status         = req.body.status
         post.allowComments  = allowComments
+        post.dateModified   = Date.now()
 
         if (!uploadHelper.isEmpty(req.files)) {
             let file = req.files.file

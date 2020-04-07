@@ -13,10 +13,10 @@ module.exports = {
         return options.fn(this).replace(new RegExp(' value=\"' + selected + '\"'), '$&selected="selected"')
     }, 
     
-    trimString: function(passedString, id) {
-        if(passedString.length > 110) {
-            var shortString = passedString.substring(0, 110)
-            shortString += `... <a href="/admin/posts/edit/${id}">[Read more]</a>`
+    trimString: function(passedString, id, num) {
+        if(passedString.length > parseInt(num)) {
+            var shortString = passedString.substring(0, parseInt(num))
+            // shortString += `... <br><a class="btn btn-primary" href="/posts/${id}" id="${id}">Read more &rarr;</a>`
             
             return shortString
         } 
