@@ -1,5 +1,8 @@
 const express   = require('express')
-const router    = express.Router()
+// Models
+const Post = require('../../models/Post')
+// const vars
+const router = express.Router()
 
 router.all('/*', (req, res, next) => {
     req.app.locals.layout = 'home'
@@ -7,10 +10,15 @@ router.all('/*', (req, res, next) => {
 })
 
 router.get('/', (req, res) => {
-    // req.session.foo = 'foobar'
-    // req.session.foo ? console.log(`session found: ${req.session.foo}`) : console.log('No session found')
+    Post.find({}).lean().then(posts => {
+        res.render('home/index', { posts: posts })
+    })
+})
 
-    res.render('home/index')
+router.get('/post/:id', (req, res) => {
+    Post.findById({ _id: req.params.id }).lean().then(post => {
+        res.render('home/post', { post: post })
+    })
 })
 
 router.get('/about', (req, res) => {
