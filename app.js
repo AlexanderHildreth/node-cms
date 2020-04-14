@@ -1,26 +1,26 @@
 // Modules
-const bodyParser = require('body-parser')
-const express = require('express')
-const expHandlebars = require('express-handlebars')
-const flash = require('connect-flash')
-const methodOverride = require('method-override')
-const mongoose = require('mongoose')
-const path = require('path')
-const session = require('express-session')
-const upload = require('express-fileupload')
+const bodyParser        = require('body-parser')
+const express           = require('express')
+const expHandlebars     = require('express-handlebars')
+const flash             = require('connect-flash')
+const methodOverride    = require('method-override')
+const mongoose          = require('mongoose')
+const path              = require('path')
+const session           = require('express-session')
+const upload            = require('express-fileupload')
 // Models
-const postsModel = require('./models/Post')
+const postsModel        = require('./models/Post')
 // Routes
-const adminRoutes = require('./routes/admin/admin')
-const categoryRoutes = require('./routes/admin/categories')
-const homeRoutes = require('./routes/home/home')
-const postRoutes = require('./routes/admin/posts')
+const adminRoutes       = require('./routes/admin/admin')
+const categoryRoutes    = require('./routes/admin/categories')
+const homeRoutes        = require('./routes/home/home')
+const postRoutes        = require('./routes/admin/posts')
 // const vars
-const app = express();
-const appPort = process.env.PORT || 9999
+const app               = express();
+const appPort           = process.env.PORT || 9999
 const handlebarsHelpers = require('./helpers/handlebarsHelpers')
-const mongoDbUrl = require('./config/database');
-const mongoDbPort = process.env.MONGOD_DB_PORT || 27017;
+const mongoDbUrl        = require('./config/database');
+const mongoDbPort       = process.env.MONGOD_DB_PORT || 27017;
 
 // DB connection
 mongoose.Promise = global.Promise
