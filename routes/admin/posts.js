@@ -87,7 +87,6 @@ router.put('/edit/:id', (req, res) => {
     let errors      = []
     let fileName    = '';
     var allowComments
-
     
     Post.findById({ _id: req.params.id }).then(post => {
         if (!req.body.title) {
@@ -124,7 +123,6 @@ router.put('/edit/:id', (req, res) => {
                     if (err) throw err
                 })
             // })
-
         }
 
         post.save().then(updatedPost => {
@@ -148,7 +146,6 @@ router.delete('/delete/:id', (req, res) => {
             })
         })
     })
-
 })
 
 module.exports = router

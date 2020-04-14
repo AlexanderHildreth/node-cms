@@ -3,45 +3,40 @@
         <h1>Create Category</h1>
         <form action="/admin/categories/create" method="post">
                 <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">Category Name</label>
                     <input type="text" name="name" placeholder="Enter title" class="form-control">
                 </div>
             <button class="btn btn-primary">Create Category</button>
         </form>
     </div>
-    <br>
-    <hr>
 </div>
+
 <br>
-<div class="row">
-    <div class="col-sm-8">
-        <h1>Categories</h1>
-        <table class="table table-hover table responsive">
-            <thead class="thead-dark">
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Date Modified</th>
-                <th class="text-center">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each categories}}
-                <tr>
-                    <td>{{offsetIndex @index}}</td>
-                    <td>{{name}}</td>
-                    <td>{{genDate dateModified 'Do MMMM YYYY'}}</td>
-                    <td><a href="/admin/categories/edit/{{_id}}" class="btn btn-info">Edit</a></td>
-                    <td>
-                        <form action="/admin/categories/delete/{{_id}}?_method=delete" id="deleteCategory{{offsetIndex @index}}" method="post"
-                            onsubmit="return confirm('The current category: `{{title}}` will be removed, are you sure?');">
-                            <button type="submit" class=" btn btn-danger" form="deletePost{{offsetIndex @index}}"><i class="fa fa-trash"></i>
-                                Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
-    </div>
-</div>
+<h1>Categories</h1>
+<table class="table table-hover table responsive">
+    <tr>
+        <thead class="thead-dark">
+            <th>#</th>
+            <th>Name</th>
+            <th class="text-right">Date Modified</th>
+            <th class="text-right">Actions</th>
+        </thead>
+    </tr>
+    <tbody>
+    {{#each categories}}
+        <tr>
+            <td>{{offsetIndex @index}}</td>
+            <td>{{name}}</td>
+            <td class="text-right">{{genDate dateModified 'Do MMMM YYYY'}}</td>
+            <td style="display: flex; float: right;">
+                <a href="/admin/categories/edit/{{_id}}" class="btn btn-info">Edit</a>
+                <form action="/admin/categories/delete/{{_id}}?_method=delete" id="deleteCategory{{offsetIndex @index}}" method="post"
+                    onsubmit="return confirm('The current category: `{{name}}` will be removed, are you sure?');">
+                    <button type="submit" class="btn btn-danger" form="deleteCategory{{offsetIndex @index}}"><i class="fa fa-trash"></i>
+                        Delete</button>
+                </form>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

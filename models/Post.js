@@ -19,10 +19,10 @@ const PostSchema = new Schema({
         require: true
     }, dateCreated: {
         type: Date,
-        require: true
+        require: null
     }, dateModified: {
         type: Date,
-        default: null
+        default: Date.now()
     }
 })
 
