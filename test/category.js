@@ -15,7 +15,7 @@ chai.use(chaiHttp);
 describe('Categories', () => {
     //  DB stuff
     before(function () {
-        mongoose.Connection(mongoDbUrl.url, { useNewUrlParser: true, useUnifiedTopology: true });
+        mongoose.Connection(mongoDbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
     });
     beforeEach((done) => {
         Category.deleteMany({}, (err) => {

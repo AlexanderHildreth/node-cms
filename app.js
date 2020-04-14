@@ -64,3 +64,5 @@ app.set('view engine', 'handlebars')
 app.listen(appPort, () => {
     console.log(`Server is listening on port ${appPort}...`)
 })
+
+module.exports = app;
