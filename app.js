@@ -29,7 +29,7 @@ mongoose.connect(mongoDbUrl.url, { useNewUrlParser: true, useUnifiedTopology: tr
     console.log(`DB connection established, to db: ${mongoDbPort}...`)
 }).catch((err) => {
     console.log(`There was an error establishing connection:\n${err}`)
-    console.log(`\n${mongoDbURL}`) 
+    console.log(`\n${mongoDbURL}`)
 })
 
 // Middleware
@@ -57,7 +57,7 @@ app.use('/admin/categories', categoryRoutes)
 app.use('/admin/posts', postRoutes)
 
 // Setting
-app.engine('handlebars', expHandlebars({ defaultLayout: 'home', helpers: handlebarsHelpers}))
+app.engine('handlebars', expHandlebars({ defaultLayout: 'home', helpers: handlebarsHelpers }))
 app.set('view engine', 'handlebars')
 
 
