@@ -48,7 +48,7 @@ router.post('/create', (req, res) => {
     }
 
     if(errors.length > 0) {
-        res.render('admin/posts/create', { errors: errors, post: req.body })
+        res.render('admin/posts/create', { error: errors, post: req.body })
         return;
     }
 
@@ -77,7 +77,7 @@ router.post('/create', (req, res) => {
         req.flash('successMessage', `Post successfully created: "${savedPost.title}"`)
         res.status(200).redirect('/admin/posts')
     }).catch(err => {
-        res.render('admin/posts.create', { eroors: err.errors })
+        res.render('admin/posts.create', { error: err.errors })
         return;
     })
 })
