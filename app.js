@@ -17,16 +17,16 @@ const homeRoutes        = require('./routes/home/home')
 const postRoutes        = require('./routes/admin/posts')
 // const vars
 const app               = express();
-const mongoDbUrl        = require('./config/database');
-// const mongoDbUrl        = require('dotenv').config({ path: './config/database' });
-const port              = process.env.PORT || 9999
+const appPort           = process.env.PORT || 9999
 const handlebarsHelpers = require('./helpers/handlebarsHelpers')
+const mongoDbUrl        = require('./config/database');
+const mongoDbPort       = process.env.MONGOD_DB_PORT || 27017;
 
 // DB connection
 mongoose.Promise = global.Promise
 
 mongoose.connect(mongoDbUrl.url, { useNewUrlParser: true, useUnifiedTopology: true }).then((db) => {
-    console.log('DB connection established, listening on port 27017...')
+    console.log(`DB connection established, to db: ${mongoDbPort}...`)
 }).catch((err) => {
     console.log(`There was an error establishing connection:\n${err}`)
     console.log(`\n${mongoDbURL}`) 
@@ -61,6 +61,6 @@ app.engine('handlebars', expHandlebars({ defaultLayout: 'home', helpers: handleb
 app.set('view engine', 'handlebars')
 
 
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}...`)
+app.listen(appPort, () => {
+    console.log(`Server is listening on port ${appPort}...`)
 })
