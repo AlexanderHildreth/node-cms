@@ -12,6 +12,7 @@ const upload            = require('express-fileupload')
 const postsModel        = require('./models/Post')
 // Routes
 const adminRoutes       = require('./routes/admin/admin')
+const categoryRoutes    = require('./routes/admin/categories')
 const homeRoutes        = require('./routes/home/home')
 const postRoutes        = require('./routes/admin/posts')
 // const vars
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
 })
 app.use('/', homeRoutes)
 app.use('/admin', adminRoutes)
+app.use('/admin/categories', categoryRoutes)
 app.use('/admin/posts', postRoutes)
 
 // Setting

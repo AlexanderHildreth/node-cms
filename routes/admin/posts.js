@@ -1,7 +1,7 @@
 const express       = require('express')
 const fs            = require('fs')
-const moment        = require('moment')
-const path          = require('path')
+const moment        = require('moment') //date library - Could be removed?
+const path          = require('path') //needed?
 // Models
 const Post          = require('../../models/Post')
 // const vars
