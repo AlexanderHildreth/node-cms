@@ -26,7 +26,7 @@
                 <td style="display: flex; float: right;">
                     <a href="/admin/posts/edit/{{_id}}" class="btn btn-info" style="float: inline-end;"><i class="fa fa-edit"></i> Edit</a>
                     <form action="/admin/posts/delete/{{_id}}?_method=delete" id="deletePost{{offsetIndex @index}}" method="post" onsubmit="return confirm('The current post: `{{title}}` will be removed, are you sure?');">
-                        <button type="submit" class=" btn btn-danger" form="deletePost{{offsetIndex @index}}"><i class="fa fa-trash"></i> Delete</button>
+                        <button type="submit" class="btn btn-danger" form="deletePost{{offsetIndex @index}}"><i class="fa fa-trash"></i> Delete</button>
                     </form>
                 </td>
             </tr>

@@ -1,7 +1,7 @@
 const express       = require('express')
 const fs            = require('fs')
-const moment        = require('moment')
-const path          = require('path')
+const moment        = require('moment') //date library - Could be removed?
+const path          = require('path') //needed?
 // Models
 const Post          = require('../../models/Post')
 // const vars
@@ -48,7 +48,7 @@ router.post('/create', (req, res) => {
     }
 
     if(errors.length > 0) {
-        res.render('admin/posts/create', { errors: errors, post: req.body })
+        res.render('admin/posts/create', { error: errors, post: req.body })
         return;
     }
 
@@ -77,7 +77,7 @@ router.post('/create', (req, res) => {
         req.flash('successMessage', `Post successfully created: "${savedPost.title}"`)
         res.status(200).redirect('/admin/posts')
     }).catch(err => {
-        res.render('admin/posts.create', { eroors: err.errors })
+        res.render('admin/posts.create', { error: err.errors })
         return;
     })
 })
@@ -87,7 +87,6 @@ router.put('/edit/:id', (req, res) => {
     let errors      = []
     let fileName    = '';
     var allowComments
-
     
     Post.findById({ _id: req.params.id }).then(post => {
         if (!req.body.title) {
@@ -124,7 +123,6 @@ router.put('/edit/:id', (req, res) => {
                     if (err) throw err
                 })
             // })
-
         }
 
         post.save().then(updatedPost => {
@@ -148,7 +146,6 @@ router.delete('/delete/:id', (req, res) => {
             })
         })
     })
-
 })
 
 module.exports = router
