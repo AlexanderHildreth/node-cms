@@ -17,16 +17,19 @@ const homeRoutes        = require('./routes/home/home')
 const postRoutes        = require('./routes/admin/posts')
 // const vars
 const app               = express();
+const mongoDbUrl        = require('./config/database');
+// const mongoDbUrl        = require('dotenv').config({ path: './config/database' });
 const port              = process.env.PORT || 9999
 const handlebarsHelpers = require('./helpers/handlebarsHelpers')
 
 // DB connection
 mongoose.Promise = global.Promise
 
-mongoose.connect('mongodb://localhost:27017/cms', { useNewUrlParser: true, useUnifiedTopology: true }).then((db) => {
+mongoose.connect(mongoDbUrl.url, { useNewUrlParser: true, useUnifiedTopology: true }).then((db) => {
     console.log('DB connection established, listening on port 27017...')
 }).catch((err) => {
     console.log(`There was an error establishing connection:\n${err}`)
+    console.log(`\n${mongoDbURL}`) 
 })
 
 // Middleware
