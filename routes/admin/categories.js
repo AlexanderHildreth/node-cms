@@ -43,12 +43,11 @@ router.post('/create', (req, res) => {
 
     if (errors.length == 0){
         newCategory.save().then(savedCategory => {
-            // req.flash('successMessage', `Category successfully created: "${savedCategory.name}"`)
-            // res.redirect('/admin/categories')
-            res.json({ message: `Category successfully created: "${savedCategory.name}"`, savedCategory})
+            req.flash('successMessage', `Category successfully created: "${savedCategory.name}"`)
+            res.json({ message: `Category successfully create`, savedCategory})
+            return;
         }).catch(err => {
-            // req.flash('errorMessage', `There was an error saving category: ${err.errors}`)
-            // res.render('admin/categories')
+            req.flash('errorMessage', `There was an error saving category: ${err.errors}`)
             res.status(400).send({ errors: err });
             return;
         })

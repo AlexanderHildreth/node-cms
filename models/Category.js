@@ -5,7 +5,6 @@ const CategorySchema = new Schema({
     name: {
         type: String,
         require: true,
-        // default: undefined
     }, dateCreated: {
         type: Date,
         require: null
