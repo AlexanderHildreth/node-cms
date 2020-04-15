@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const CategorySchema = new Schema({
     name: {
         type: String,
-        require: true
+        require: true,
+        // default: undefined
     }, dateCreated: {
         type: Date,
         require: null

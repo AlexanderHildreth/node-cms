@@ -12,7 +12,8 @@ router.all('/*', (req, res, next) => {
 // Get
 router.get('/', (req, res) => {
     Category.find({}).lean().then(categories => {
-        res.render('admin/categories', { categories: categories })
+        // res.render('admin/categories', { categories: categories })
+        res.json(categories)
     })
 })
 router.get('/edit/:id', (req, res) => {
@@ -23,9 +24,15 @@ router.get('/edit/:id', (req, res) => {
 
 // Create
 router.post('/create', (req, res) => {   
+    const errors = {}
+
     if (!req.body.name) {
-        res.render('admin/categories', { error: 'Please enter a valid name' })
-        return;
+        errors.name = {
+            message: 'Please enter a valid name',
+            type: 'required',
+        }
+
+        console.log(req.body)
     }
 
     const newCategory = new Category({
@@ -34,14 +41,20 @@ router.post('/create', (req, res) => {
         dateModified: Date.now()
     })
 
-    newCategory.save().then(savedCategory => {
-        req.flash('successMessage', `Category successfully created: "${savedCategory.name}"`)
-        res.redirect('/admin/categories')
-    }).catch(err => {
-        req.flash('errorMessage', `There was an error saving category: ${err.errors}`)
-        res.render('admin/categories')
-        return;
-    })
+    if (errors.length == 0){
+        newCategory.save().then(savedCategory => {
+            // req.flash('successMessage', `Category successfully created: "${savedCategory.name}"`)
+            // res.redirect('/admin/categories')
+            res.json({ message: `Category successfully created: "${savedCategory.name}"`, savedCategory})
+        }).catch(err => {
+            // req.flash('errorMessage', `There was an error saving category: ${err.errors}`)
+            // res.render('admin/categories')
+            res.status(400).send({ errors: err });
+            return;
+        })
+    } else {
+        res.send({ errors: errors })
+    }
 })
 
 // Update
