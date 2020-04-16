@@ -1,8 +1,9 @@
-const express = require('express')
+const express       = require('express')
 // Models
-const Category = require('../../models/Category')
+const Category      = require('../../models/Category')
 // const vars
-const router = express.Router()
+const catController = require('../../controllers/categoryController')
+const router        = express.Router()
 
 router.all('/*', (req, res, next) => {
     req.app.locals.layout = 'admin'
@@ -11,15 +12,14 @@ router.all('/*', (req, res, next) => {
 
 // Get
 router.get('/', (req, res) => {
-    Category.find({}).lean().then(categories => {
-        // res.render('admin/categories', { categories: categories })
-        res.json(categories)
-    })
+    
+
 })
-router.get('/edit/:id', (req, res) => {
-    Category.findById({ _id: req.params.id }).lean().then(category => {
-        res.render('admin/categories/edit', { category: category })
-    })
+router.get('/:id', (req, res) => {
+    
+})
+router.get('/:name', (req, res) => {
+    
 })
 
 // Create

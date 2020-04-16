@@ -1,7 +1,7 @@
 // Modules
 const mongoose      = require('mongoose')
 // const vars
-const mongoDbUrl
+var mongoDbUrl
 const mongoDbPort   = process.env.MONGOD_DB_PORT || 27017;
 
 if(process.env.NODE_ENV === 'production'){
@@ -12,8 +12,6 @@ if(process.env.NODE_ENV === 'production'){
     mongoDbUrl = require('./localDatabase');
 }
 
-
-
 // DB connection
 mongoose.Promise = global.Promise
 
@@ -23,7 +21,7 @@ mongoose.connect(mongoDbUrl.url, {
 })
 
 mongoose.connection.on('connected', () => {
-    console.log('DB Connected');
+    console.log(`DB Connected at: ${mongoDbUrl.url}`);
 })
 
 mongoose.connection.on('error', err => {

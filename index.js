@@ -1,7 +1,7 @@
 const app       = require('./app');
 const dotenv    = require('dotenv');
 const appPort   = process.env.PORT || 9999
-require('./models/database');
+require('./config/database');
 
 dotenv.config({ path: './secrets.env' });
 
