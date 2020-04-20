@@ -1,16 +1,15 @@
+// files
+require('./config/database');
 // Modules
+const dotenv            = require('dotenv');
 const express           = require('express')
 const bodyParser        = require('body-parser')
 const expHandlebars     = require('express-handlebars')
 const flash             = require('connect-flash')
 const methodOverride    = require('method-override')
-const mongoose          = require('mongoose')
-
 const path              = require('path')
 const session           = require('express-session')
 const upload            = require('express-fileupload')
-// Models
-const postsModel        = require('./models/Post')
 // Routes
 const adminRoutes       = require('./routes/admin/admin')
 const categoryRoutes    = require('./routes/admin/categories')
@@ -25,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Middleware
+dotenv.config({ path: './secrets.env' });
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
