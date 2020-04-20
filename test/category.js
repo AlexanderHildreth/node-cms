@@ -1,10 +1,9 @@
 // Modules
 const chai          = require('chai');
 const chaiHttp      = require('chai-http');
-// const mongoose      = require('mongoose')
-const app           = require('../app');
+const app           = require('../index');
 // Models
-const Category      = require('../models/Category')
+const CategoryTest  = require('../models/Category')
 // config
 const mongoDbUrl    = process.env.MONGODB_URI || 'mongodb://localhost:27017/cms';
 // const vars 
@@ -14,12 +13,12 @@ const should        = chai.should();
 chai.use(chaiHttp);
 
 // parent block
-describe('Categories', () => {
+describe('Category', () => {
     /*
     * DB STUFF
     */
     beforeEach((done) => {
-        Category.deleteMany({}, (err) => {
+        CategoryTest.deleteMany({}, (err) => {
             if (err) done(err);
 
             done();
@@ -31,12 +30,12 @@ describe('Categories', () => {
     describe('/GET categories', () => {
         it('it should GET all the categories', done => {
             chai.request(app)
-                .get('/admin/categories')
+                .get('/api/v1/admin/categories')
                 .end((err, res) => {
                     expect(err).to.be.null;;
 
                     res.should.have.status(200);
-                    res.body.should.be.a('array');
+                    res.body.should.be.a('json');
                     res.body.length.should.be.eql(0);
                     done();
                 });
@@ -45,7 +44,7 @@ describe('Categories', () => {
     /*
     * POST
     */
-    describe('/POST categories', () => {
+    /*describe('/POST categories', () => {
         it('it should not POST a category without name field', (done) => {
             const categoryPostFail = {
                 name: undefined
@@ -90,5 +89,5 @@ describe('Categories', () => {
                     done()
                 })
         })
-    })
+    })*/
 })
