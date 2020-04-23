@@ -9,7 +9,7 @@ const PostSchema = new Schema({
         type: String
     }, body: {
         type: String,
-        requird: true
+        require: true
     }, status: {
         type: String,
         default: 'draft',
